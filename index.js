@@ -13,7 +13,7 @@ const DEFAULT_OPTIONS = {
   useIAMRoleCredentials: false
 }
 
-module.exports = function(
+module.exports = async function(
   directoryToUpload,
   credentials,
   options,
@@ -42,11 +42,13 @@ module.exports = function(
   directoryToUpload = directoryToUpload || DEFAULT_DIRECTORY_NAME
   const directoryPath = path.resolve(directoryToUpload)
   log.info(`[config] Directory to upload:\n\t ${directoryPath}`)
-  uploadDirectory(
+  await uploadDirectory(
     directoryPath,
     awsCredentialsSanitized,
     options,
     invalidationConfig,
     filesOptions
   )
+
+  return Promise.resolve()
 }
